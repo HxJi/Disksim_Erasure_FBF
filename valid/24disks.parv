@@ -1,0 +1,313 @@
+disksim_global Global {
+  Init Seed = 42,
+  Real Seed = 42,
+  Stat definition file = statdefs
+}
+
+disksim_stats Stats {
+  iodriver stats = disksim_iodriver_stats {
+  Print driver size stats = 1,
+  Print driver locality stats = 1,
+  Print driver blocking stats = 1,
+  Print driver interference stats = 1,
+  Print driver queue stats = 1,
+  Print driver crit stats = 1,
+  Print driver idle stats = 1,
+  Print driver intarr stats = 1,
+  Print driver streak stats = 1,
+  Print driver stamp stats = 1,
+  Print driver per-device stats = 1 },
+  bus stats = disksim_bus_stats {
+    Print bus idle stats = 1,
+    Print bus arbwait stats = 1
+  },
+  ctlr stats = disksim_ctlr_stats {
+    Print controller cache stats = 1,
+    Print controller size stats = 1,
+    Print controller locality stats = 1,
+    Print controller blocking stats = 1,
+    Print controller interference stats = 1,
+    Print controller queue stats = 1,
+    Print controller crit stats = 1,
+    Print controller idle stats = 1,
+    Print controller intarr stats = 1,
+    Print controller streak stats = 1,
+    Print controller stamp stats = 1,
+    Print controller per-device stats = 1
+  },
+  device stats = disksim_device_stats {
+    Print device queue stats = 1,
+    Print device crit stats = 1,
+    Print device idle stats = 1,
+    Print device intarr stats = 1,
+    Print device size stats = 1,
+    Print device seek stats = 1,
+    Print device latency stats = 1,
+    Print device xfer stats = 1,
+    Print device acctime stats = 1,
+    Print device interfere stats = 1,
+    Print device buffer stats = 1
+  },
+  process flow stats = disksim_pf_stats {
+    Print per-process stats =  1,
+    Print per-CPU stats =  1,
+    Print all interrupt stats =  1,
+    Print sleep stats =  1
+  }
+}
+
+disksim_iodriver DRIVER0 {
+  type = 1,
+  Constant access time = 0.0,
+  Scheduler = disksim_ioqueue {
+    Scheduling policy = 3,
+    Cylinder mapping strategy = 1,
+    Write initiation delay = 0.0,
+    Read initiation delay = 0.0,
+    Sequential stream scheme = 3,
+    Maximum concat size = 256,
+    Overlapping request scheme = 0,
+    Sequential stream diff maximum = 0,
+    Scheduling timeout scheme = 0,
+    Timeout time/weight = 30,
+    Timeout scheduling = 3,
+    Scheduling priority scheme = 1,
+    Priority scheduling = 3
+  },
+  Use queueing in subsystem = 0
+}
+
+disksim_bus BUS0 {
+  type = 2,
+  Arbitration type = 1,
+  Arbitration time = 0.0,
+  Read block transfer time = 0.0,
+  Write block transfer time = 0.0,
+  Print stats =  0
+}
+
+disksim_bus BUS1 {
+  type = 1,
+  Arbitration type = 1,
+  Arbitration time = 0.0,
+  Read block transfer time = 0.0512,
+  Write block transfer time = 0.0512,
+  Print stats =  1
+}
+
+disksim_ctlr CTLR0 {
+  type = 1,
+  Scale for delays = 0.0,
+  Bulk sector transfer time = 0.0,
+  Maximum queue length = 0,
+  Print stats =  1
+}
+
+source cheetah9LP.diskspecs
+
+instantiate [ statfoo ] as Stats
+instantiate [ ctlr0 .. ctlr35 ] as CTLR0
+instantiate [ bus0 .. bus4 ] as BUS0
+instantiate [ disk0 .. disk31 ] as SEAGATE_ST39102LW_validate
+instantiate [ driver0 ] as DRIVER0
+instantiate [ bus5 .. bus36 ] as BUS1
+
+topology disksim_iodriver driver0 [
+  disksim_bus bus0 [
+    disksim_ctlr ctlr0 [
+      disksim_bus bus1 [
+        disksim_ctlr ctlr4 [
+          disksim_bus bus5 [
+            disksim_disk disk0 []
+          ]
+        ],
+        disksim_ctlr ctlr5 [
+          disksim_bus bus6 [
+            disksim_disk disk1 []
+          ]
+        ],
+        disksim_ctlr ctlr6 [
+          disksim_bus bus7 [
+            disksim_disk disk2 []
+          ]
+        ],
+        disksim_ctlr ctlr7 [
+          disksim_bus bus8 [
+            disksim_disk disk3 []
+          ]
+        ],
+        disksim_ctlr ctlr8 [
+          disksim_bus bus9 [
+            disksim_disk disk4 []
+          ]
+        ],
+        disksim_ctlr ctlr9 [
+          disksim_bus bus10 [
+            disksim_disk disk5 []
+          ]
+        ],
+        disksim_ctlr ctlr10 [
+          disksim_bus bus11 [
+            disksim_disk disk6 []
+          ]
+        ],
+        disksim_ctlr ctlr11 [
+          disksim_bus bus12 [
+            disksim_disk disk7 []
+          ]
+        ] 
+      ]
+    ],
+    disksim_ctlr ctlr1 [
+      disksim_bus bus2 [
+        disksim_ctlr ctlr12 [
+          disksim_bus bus13 [
+            disksim_disk disk8 []
+          ]
+        ],
+        disksim_ctlr ctlr13 [
+          disksim_bus bus14 [
+            disksim_disk disk9 []
+          ]
+        ],
+        disksim_ctlr ctlr14 [
+          disksim_bus bus15 [
+            disksim_disk disk10 []
+          ]
+        ],
+        disksim_ctlr ctlr15 [
+          disksim_bus bus16 [
+            disksim_disk disk11 []
+          ]
+        ],
+        disksim_ctlr ctlr16 [
+          disksim_bus bus17 [
+            disksim_disk disk12 []
+          ]
+        ],
+        disksim_ctlr ctlr17 [
+          disksim_bus bus18 [
+            disksim_disk disk13 []
+          ]
+        ],
+        disksim_ctlr ctlr18 [
+          disksim_bus bus19 [
+            disksim_disk disk14 []
+          ]
+        ],
+        disksim_ctlr ctlr19 [
+          disksim_bus bus20 [
+            disksim_disk disk15 []
+          ]
+        ] 
+      ]
+    ],
+    disksim_ctlr ctlr2 [
+      disksim_bus bus3 [
+        disksim_ctlr ctlr20 [
+          disksim_bus bus21 [
+            disksim_disk disk16 []
+          ]
+        ],
+        disksim_ctlr ctlr21 [
+          disksim_bus bus22 [
+            disksim_disk disk17 []
+          ]
+        ],
+        disksim_ctlr ctlr22 [
+          disksim_bus bus23 [
+            disksim_disk disk18 []
+          ]
+        ],
+        disksim_ctlr ctlr23 [
+          disksim_bus bus24 [
+            disksim_disk disk19 []
+          ]
+        ],
+        disksim_ctlr ctlr24 [
+          disksim_bus bus25 [
+            disksim_disk disk20 []
+          ]
+        ],
+        disksim_ctlr ctlr25 [
+          disksim_bus bus26 [
+            disksim_disk disk21 []
+          ]
+        ],
+        disksim_ctlr ctlr26 [
+          disksim_bus bus27 [
+            disksim_disk disk22 []
+          ]
+        ],
+        disksim_ctlr ctlr27 [
+          disksim_bus bus28 [
+            disksim_disk disk23 []
+          ]
+        ] 
+      ]
+    ],
+    disksim_ctlr ctlr3 [
+      disksim_bus bus4 [
+        disksim_ctlr ctlr28 [
+          disksim_bus bus29 [
+            disksim_disk disk24 []
+          ]
+        ],
+        disksim_ctlr ctlr29 [
+          disksim_bus bus30 [
+            disksim_disk disk25 []
+          ]
+        ],
+        disksim_ctlr ctlr30 [
+          disksim_bus bus31 [
+            disksim_disk disk26 []
+          ]
+        ],
+        disksim_ctlr ctlr31 [
+          disksim_bus bus32 [
+            disksim_disk disk27 []
+          ]
+        ],
+        disksim_ctlr ctlr32 [
+          disksim_bus bus33 [
+            disksim_disk disk28 []
+          ]
+        ],
+        disksim_ctlr ctlr33 [
+          disksim_bus bus34 [
+            disksim_disk disk29 []
+          ]
+        ],
+        disksim_ctlr ctlr34 [
+          disksim_bus bus35 [
+            disksim_disk disk30 []
+          ]
+        ],
+        disksim_ctlr ctlr35 [
+          disksim_bus bus36 [
+            disksim_disk disk31 []
+          ]
+        ] 
+      ]
+    ] 
+  ]
+]
+
+disksim_logorg org0 {
+  Addressing mode = Parts,
+  Distribution scheme = Asis,
+  Redundancy scheme = Noredun,
+  devices = [ disk0 .. disk31 ],
+  Number of copies = 2,
+  Stripe unit  =  32,
+  Synch writes for safety =  1,
+  Copy choice on read =  6,
+  RMW vs. reconstruct =  0.5,
+  Parity stripe unit =  32,
+  Parity rotation type = 1,
+  Time stamp interval =  0.000000,
+  Time stamp start time =  0.000000,
+  Time stamp stop time =  10000000000.000000,
+  Time stamp file name =  stamps
+}
+
